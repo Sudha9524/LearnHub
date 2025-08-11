@@ -16,7 +16,7 @@ export default function Home() {
           </div>
           <div className="flex gap-8 font-medium relative -top-10 text-gray-600">
             <a href="#">HOME</a>
-            <Link href={'/about-us'} className="min-w-2"></Link>
+            <Link href={'/pages/about-us'} className="min-w-2"></Link>
             <a href="#">ABOUT US</a>
             <a href="#">COURSES</a>
             <a href="#">CONTACT US</a>

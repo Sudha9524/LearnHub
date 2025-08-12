@@ -7,7 +7,7 @@ const page = () => {
        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-8">
       <div className="flex-1 text-center md:text-left">
       <h1 className="text-3xl md:text-4xl font-bold leading-tight">
-        Learn to Code Websites, Apps
+        Learn to Code Websites And Apps
      </h1>
    <p className="mt-4 text-lg opacity-90">
        A Learning Management System (LMS) is a digital platform that simplifies the creation, delivery, and tracking of educational content.
@@ -44,7 +44,7 @@ const page = () => {
               </p>
             </div>
               <div className="bg-gray-50 p-6 rounded-lg shadow hover:shadow-md transition">
-              <h3 className="font-semibold text-lg mb-2">ACHIEVESMENTS</h3>
+              <h3 className="font-semibold text-lg mb-2">ACHIEVEMENTS</h3>
               <p className="text-gray-600 text-sm">
                 
               </p>

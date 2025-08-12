@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-white p-4">
-      <div className="bg-fuchsia-150 rounded-lg shadow-lg w-full max-w-6xl overflow-hidden border-2 border-teal-200">
+    <div className="flex min-h-1items-center justify-center bg-white p-4">
+      <div className="bg-fuchsia-150 items-center justify-center">
         <header className="flex justify-between items-center px-4 bg-blue-100">
           <div className="font-bold px-6 py-8 rounded relative -top-6">
             <Image
@@ -15,11 +15,10 @@ export default function Home() {
             />
           </div>
           <div className="flex gap-8 font-medium relative -top-10 text-gray-600">
-            <a href="#">HOME</a>
-            <Link href={'/pages/about-us'} className="min-w-2"></Link>
-            <a href="#">ABOUT US</a>
-            <a href="#">COURSES</a>
-            <a href="#">CONTACT US</a>
+            HOME
+            <Link href={'/pages/about-us'}>ABOUT US</Link>
+            <Link href={'/pages/courses'}>COURSES</Link>
+            <Link href={'/pages/contact-us'}>CONTACT-US</Link>
           </div>
         </header>
         <main className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 items-center">

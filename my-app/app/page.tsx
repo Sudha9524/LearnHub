@@ -6,15 +6,10 @@ export default function Home() {
     <div className="flex min-h-1items-center justify-center bg-white p-4">
       <div className="bg-fuchsia-150 items-center justify-center">
         <header className="flex justify-between items-center px-4 bg-blue-100">
-          <div className="font-bold px-6 py-8 rounded relative -top-6">
-            <Image
-            src="/lms.png"
-            alt="public"
-            width={100}
-            height={100}
-            />
+          <div className="font-bold px-6 py-8 rounded relative -top-4 font-mono text-blue-500">
+            LEARNHUB
           </div>
-          <div className="flex gap-8 font-medium relative -top-10 text-gray-600">
+          <div className="flex gap-8 font-medium relative -top-6 text-gray-600">
             HOME
             <Link href={'/pages/about-us'}>ABOUT US</Link>
             <Link href={'/pages/courses'}>COURSES</Link>

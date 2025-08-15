@@ -15,7 +15,7 @@ const DashboardLayout = ({
         <Sidebar/>
       </div>
       <main
-      className="md:pl-50 h-fuu">
+      className="md:pl-50 pt-[80px] h-fuu">
         {children}
       </main>
     </div>

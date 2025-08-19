@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import toast from "react-hot-toast"
 
 import {
   Form,
@@ -16,7 +17,7 @@ import {
   FormMessage,
   FormItem,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
@@ -39,10 +40,11 @@ const CreatePage = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.post("/api/course", values);
+      const response = await axios.post("/api/courses", values);
       router.push(`/teacher/courses/${response.data.id}`);
+      toast.success("Course created");
     } catch {
-      console.log("Something went wrong");
+      toast.error("Somthing went wrong")
     }
   };
 
@@ -76,9 +78,20 @@ const CreatePage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isSubmitting || !isValid}>
-              Create
-            </Button>
+            <div className="flex items-center gap-x-2">
+              <Link href="/" passHref>
+                <Button variant="ghost" type="button">
+                  Cancel
+                </Button>
+              </Link>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+              >
+                Continue
+              </Button>
+            </div>
           </form>
         </Form>
       </div>

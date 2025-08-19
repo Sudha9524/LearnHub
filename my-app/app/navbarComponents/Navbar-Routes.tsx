@@ -3,9 +3,8 @@ import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
  
 import { LogOut } from "lucide-react";
-import Link from "next/link"
-import { Button } from "@/app/components/ui/Button";
-
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const NavbarRoutes = () => {
     const pathname = usePathname();

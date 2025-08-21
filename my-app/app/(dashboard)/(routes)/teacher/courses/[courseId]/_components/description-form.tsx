@@ -9,6 +9,8 @@ import { useState } from "react";
 import { toast } from "react-hot-toast"
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { Course } from "@prisma/client";
+import { string } from "zod";
  
 
 import {
@@ -23,11 +25,10 @@ import { Description } from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
  
 interface DescriptionFormProps {
-    initialData: {
-        description:string;
+    initialData: Course;
+        courseId: string;
     };
-    courseId: string;
-};
+
 
 const formSchema = z.object({
     description: z.string().min(1, {
@@ -47,7 +48,9 @@ export const DescriptionForm = ({
 
     const form = useForm<z.infer<typeof formSchema>>({
        resolver: zodResolver(formSchema),
-       defaultValues: initialData, 
+       defaultValues: {
+        description:initialData?.description || ""
+       },
     });
 
     const { isSubmitting, isValid } = form.formState;

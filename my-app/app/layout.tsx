@@ -1,27 +1,12 @@
-import './globals.css'
-import type { Metadata } from "next";
-import { Inter } from 'next/font/google'
-import { ClerkProvider, SignedOut, SignUpButton } from '@clerk/nextjs'
-import {
-SignInButton,
-  SignedIn,
-  UserButton,
-} from '@clerk/nextjs'
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ToastProvider } from './navbarComponents/providers/toaster-provider';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import { ClerkProvider, SignedOut, SignUpButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
+import "./globals.css";
+import { ToastProvider } from "./navbarComponents/providers/toaster-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-const inter = Inter({ subsets: ['latin'] })
-
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,29 +20,26 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-
-    <html lang="en">
-      <body className={inter.className}>
-        <ToastProvider />
-         <header className="flex justify-end items-center p-4 gap-4 h-18">
+      <html lang="en">
+        <body className={inter.className}>
+          <ToastProvider />
+          <header className="flex justify-end items-center p-4 gap-4 h-18">
             <SignedOut>
-              {<SignInButton />}
-              { <SignUpButton>
+              <SignInButton />
+              <SignUpButton>
                 <button className="bg-[#6c47ff] text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
                   Sign Up
                 </button>
-              </SignUpButton> }
+              </SignUpButton>
             </SignedOut>
-            </header>
+          </header>
 
-        {children}
-        <footer className="flex justify-between items-center px-4 py-1 bg-blue-300">
-          footer
-        </footer>
-      </body>
-    </html>
+          {children}
+          <footer className="flex justify-between items-center px-4 py-1 bg-blue-300">
+            footer
+          </footer>
+        </body>
+      </html>
     </ClerkProvider>
-
   );
 }
-

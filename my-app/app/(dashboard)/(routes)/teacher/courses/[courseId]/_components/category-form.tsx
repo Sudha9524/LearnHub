@@ -28,9 +28,8 @@ interface CategoryFormProps {
 }
 
 const formSchema = z.object({
-  
-  categoryId: z.string().min(1, "Please select a category"),
-})
+  categoryId: z.string().min(1)
+});
 
 export const CategoryForm = ({
   initialData,

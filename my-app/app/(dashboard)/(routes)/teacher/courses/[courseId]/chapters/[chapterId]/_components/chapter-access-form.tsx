@@ -35,7 +35,7 @@ interface ChapterAccessFormProps {
 
 
 const formSchema = z.object({
-    isFree: z.boolean().default(false),
+    isFree: z.boolean().catch(false),
 });
 
 export const ChapterAccessForm = ({
@@ -53,7 +53,7 @@ export const ChapterAccessForm = ({
        resolver: zodResolver(formSchema),
        defaultValues: {
         isFree:!!initialData.isFree
-       },
+       }, 
     });
 
     const { isSubmitting, isValid } = form.formState;

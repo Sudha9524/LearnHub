@@ -7,9 +7,9 @@ import Link from "next/link";
 import { IconBadge } from "@/app/navbarComponents/icon-badge";
 
 import { ChapterTitleForm } from "./_components/chapter-title-form";
-import { DescriptionForm } from "../../_components/description-form";
 import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterAccessForm } from "./_components/chapter-access-form";
+import { ChapterVideoForm } from "./_components/chapter-video-form";
 
 
 const ChapterIdPage =  async ( {
@@ -113,6 +113,11 @@ const ChapterIdPage =  async ( {
                                     Add a video
                                 </h2>
                             </div>
+                            <ChapterVideoForm
+                            initialData={chapter}
+                            chapterId={params.chapterId}
+                            courseId={params.courseId}
+                            />
                           </div>
                           </div>
                           </div>

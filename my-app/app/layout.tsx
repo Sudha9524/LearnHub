@@ -4,7 +4,9 @@ import { Inter } from "next/font/google";
 import { ClerkProvider, SignedOut, SignUpButton } from "@clerk/nextjs";
 import { SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import "./globals.css";
-import { ToastProvider } from "./navbarComponents/providers/toaster-provider";
+import { ToastProvider } from "@/components/providers/toaster-provider";
+import { ConfettiProvider } from "@/components/providers/confetti-provider";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
+          <ConfettiProvider />
           <ToastProvider />
           <header className="flex justify-end items-center p-4 gap-4 h-18">
             <SignedOut>

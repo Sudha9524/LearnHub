@@ -1,7 +1,6 @@
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { CircleDollarSign, LayoutDashboard, ListChecks, File } from "lucide-react";
-import { IconBadge } from "@/app/navbarComponents/icon-badge";
 import { auth } from "@clerk/nextjs/server";
 import { TitleForm } from "./_components/title-form";
 import { DescriptionForm } from "./_components/description-form";
@@ -12,6 +11,7 @@ import { AttachmentForm } from "./_components/attachment-form";
 import { ChaptersForm } from "./_components/chapters-form";
 import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
+import { IconBadge } from "@/components/icon-badge";
 
 
 const CourseIdPage = async ({

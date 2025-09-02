@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { IconType } from "react-icons";
+import qs from "query-string";
 
 interface CategoryItemProps {
     label: string;

@@ -10,7 +10,7 @@ import {
     FcSalesPerformance,
     FcSportsMode
 } from "react-icons/fc";
-import { IconType } from "recharts/types/component/DefaultLegendContent";
+import { IconType } from "react-icons";
 import { CategoryItem } from "./category-item";
 
 interface CategoriesProps {

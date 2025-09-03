@@ -23,7 +23,8 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Link, PlusCircle } from "lucide-react"
+import { PlusCircle } from "lucide-react"
+import Link from "next/link"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -66,7 +67,7 @@ export function DataTable<TData, TValue>({
         <Link href="/teacher/create">
         <Button>
             <PlusCircle className="h-4 w-4 mr-2" />
-            New Course
+            New Coursess
         </Button>
         </Link>
       </div>

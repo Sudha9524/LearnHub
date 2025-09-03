@@ -6,7 +6,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 model Course {
@@ -29,12 +29,13 @@ model Course {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
-  @@fulltext([title])
+  // @@fulltext([title])  
+  @@index([title])
 }
 
 model Category {
   id   String   @id @default(uuid())
-  name  String
+  name  String @unique
   courses Course[]
 }
 

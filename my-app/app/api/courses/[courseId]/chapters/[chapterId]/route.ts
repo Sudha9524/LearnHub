@@ -11,9 +11,10 @@ const { video } = new Mux({
 
 export async function DELETE(
 req: Request,
-{ params }: { params: { courseId: string; chapterId: string } }
+context: { params: { courseId: string; chapterId: string } }
 ) {
     try {
+        const {courseId, chapterId} = context.params;
 const { userId } = await auth();
 
 if (!userId) {
@@ -22,7 +23,7 @@ if (!userId) {
 
 const ownCourse = await db.course.findUnique({
     where: {
-        id: params.courseId,
+        id: courseId,
         userId,
     }
 });
@@ -31,10 +32,10 @@ if (!ownCourse) {
     return new NextResponse("Unauthorized", { status: 401 });
 }
 
-const chapter = await db.course.findUnique({
+const chapter = await db.chapter.findUnique({
     where: {
-        id: params.chapterId,
-        courseId: params.courseId
+        id: chapterId,
+        courseId: courseId
     }
 });
 
@@ -44,7 +45,7 @@ if (!chapter) {
    if (chapter.videoUrl) {
     const existingMuxData = await db.muxData.findFirst({
         where: {
-            chapterId: params.chapterId,
+            chapterId: chapterId,
         }
     });
 
@@ -60,13 +61,13 @@ if (!chapter) {
 
    const deletedChapter = await db.chapter.delete({
     where: {
-        id: params.chapterId
+        id: chapterId
     }
    });
 
    const publishedChaptersInCourse = await db.chapter.findMany({
     where: {
-        courseId: params.courseId,
+        courseId: courseId,
         isPublished: true,
     }
    });
@@ -74,7 +75,7 @@ if (!chapter) {
    if (!publishedChaptersInCourse.length) {
     await db.course.update({
         where: {
-            id: params.courseId,
+            id: courseId,
         },
         data: {
             isPublished: false,
@@ -93,9 +94,10 @@ if (!chapter) {
 
 export async function PATCH(
    req: Request,
-   { params }: { params: { courseId: string; chapterId: string } }
+   context: { params: { courseId: string; chapterId: string } }
 ) {
     try {
+        const {courseId, chapterId} = context.params;
         const { userId } = await auth();
         const {isPublished, ...values } = await req.json();
 
@@ -105,7 +107,7 @@ export async function PATCH(
 
         const ownCourse = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId
             }
         });
@@ -116,8 +118,8 @@ export async function PATCH(
 
         const chapter = await db.chapter.update({
             where: {
-               id: params.chapterId,
-               courseId: params.courseId, 
+               id: chapterId,
+               courseId: courseId, 
             },
             data: {
                 ...values,
@@ -127,12 +129,12 @@ export async function PATCH(
         if (values.videoUrl) {
             const existingMuxData = await db.muxData.findFirst({
                 where: {
-                    chapterId: params.chapterId,
+                    chapterId: chapterId,
                 }
             });
 
             if (existingMuxData) {
-                await video.assets.del(existingMuxData.assetId);
+                await video.assets.delete(existingMuxData.assetId);
                 await db.muxData.delete({
                     where: {
                         id: existingMuxData.id,
@@ -141,15 +143,14 @@ export async function PATCH(
             }
 
 
-            const asset = await video.Assets.create({
-                input: values.videoUrl,
-                playback_policy: "public",
-                test: false,
+            const asset = await video.assets.create({
+                inputs:[{ url: values.videoUrl}],
+                playback_policy: ["public"],
             });
 
             await db.muxData.create({
                 data: {
-                    chapterId: params.chapterId,
+                    chapterId: chapterId,
                     assetId: asset.id,
                     playbackId: asset.playback_ids?.[0]?.id,
                 }

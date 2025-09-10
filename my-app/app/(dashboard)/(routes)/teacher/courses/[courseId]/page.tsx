@@ -19,6 +19,7 @@ const CourseIdPage = async ({
 }: {
   params: { courseId: string };
 }) => {
+  const {courseId} = params;
   const { userId } = await auth();
 
   if (!userId) {
@@ -27,7 +28,7 @@ const CourseIdPage = async ({
 
   const course = await db.course.findUnique({
     where: {
-      id: params.courseId,
+      id: courseId,
       userId
     },
     include: {
@@ -66,6 +67,7 @@ const CourseIdPage = async ({
     course.price,
     course.categoryId,
     course.chapters.some(chapter => chapter.isPublished),
+    course.attachments.length > 0,
   ];
 
   const totalFields = requiredFields.length;
@@ -90,7 +92,7 @@ const CourseIdPage = async ({
         </div>
         <Actions
             disabled={!isComplete}
-            courseId={params.courseId}
+            courseId={courseId}
             isPublished={course.isPublished}
              />
       </div>

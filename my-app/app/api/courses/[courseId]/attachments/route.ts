@@ -4,9 +4,10 @@ import { NextResponse } from "next/server"
 
 export async function POST(
     req: Request,
-    { params }: { params: {courseId: string } }
+    context: { params: {courseId: string } }
 ) {
     try {
+        const {courseId} = context.params;
         const { userId } =  await auth();
         const { url } =await req.json();
 
@@ -16,7 +17,7 @@ export async function POST(
 
         const courseOwner = await db.course.findFirst({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId: userId,
             }
         });
@@ -29,7 +30,7 @@ export async function POST(
             data: {
                 url,
                 name: url.split("/").pop(),
-                courseId: params.courseId,
+                courseId: courseId,
             }
         });
 

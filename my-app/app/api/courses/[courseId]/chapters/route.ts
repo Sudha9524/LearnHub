@@ -5,9 +5,10 @@ import { db } from "@/lib/db"
 
 export async function POST(
 req: Request,
-{ params }: { params: { courseId: string } }
+context: { params: { courseId: string } }
 ) {
     try {
+        const {courseId}= context.params
         const { userId } = await auth();
         const { title } = await req.json();
 
@@ -17,7 +18,7 @@ req: Request,
 
         const courseOwner = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId: userId,
             }
         });
@@ -28,7 +29,7 @@ req: Request,
 
         const lastChapter = await db.chapter.findFirst({
             where: {
-                courseId: params.courseId,
+                courseId: courseId,
             },
             orderBy: {
                 position: "desc",
@@ -40,7 +41,7 @@ req: Request,
         const chapter = await db.chapter.create({
             data: {
                 title,
-                courseId: params.courseId,
+                courseId: courseId,
                 position: newPosition,
             }
         });

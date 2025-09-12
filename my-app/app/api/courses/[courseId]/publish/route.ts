@@ -4,9 +4,10 @@ import { NextResponse } from "next/server";
   
  export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: string; } }
+    context: { params: { courseId: string; } }
 ) {
     try {
+        const {courseId}= context.params;
         const { userId } = await auth();
 
         if (!userId) {
@@ -15,7 +16,7 @@ import { NextResponse } from "next/server";
 
         const course = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId,
         },
         include: {
@@ -39,7 +40,7 @@ import { NextResponse } from "next/server";
 
             const publishedCourse = await db.course.update({
                 where: {
-                    id: params.courseId,
+                    id: courseId,
                     userId,
                 },
                 data: {

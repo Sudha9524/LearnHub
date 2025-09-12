@@ -18,8 +18,13 @@ import { Banner } from "@/components/banner";
 import { Actions } from "./_components/actions";
 import { IconBadge } from "@/components/icon-badge";
 
-const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { courseId } = params;
+
+const CourseIdPage = async ({
+  params,
+}: {
+  params: { courseId: string };
+}) => {
+  const {courseId} = params;
   const { userId } = await auth();
 
   if (!userId) {
@@ -29,7 +34,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const course = await db.course.findUnique({
     where: {
       id: courseId,
-      userId,
+      userId
     },
     include: {
       chapters: {
@@ -62,7 +67,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
-    course.chapters.some((chapter) => chapter.isPublished),
+    course.chapters.some(chapter => chapter.isPublished),
     course.attachments.length > 0,
   ];
 

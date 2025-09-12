@@ -5,9 +5,10 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
     req: Request,
-    { params }: { params: { courseId: string; chapterId: string } }
+    context : { params: { courseId: string; chapterId: string } }
 ) {
     try {
+        const {courseId, chapterId} = context.params
         const { userId } = await auth();
 
         if (!userId) {
@@ -16,7 +17,7 @@ export async function PATCH(
 
         const ownCourse = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId
             }
         });
@@ -27,14 +28,14 @@ export async function PATCH(
 
         const chapter = await db.chapter.findUnique({
             where: {
-                id: params.chapterId,
-                courseId: params.courseId,
+                id: chapterId,
+                courseId: courseId,
             }
         });
 
         const muxData = await db.muxData.findUnique({
             where: {
-                chapterId: params.chapterId,
+                chapterId: chapterId,
             }
         });
 
@@ -44,8 +45,8 @@ export async function PATCH(
 
         const publishedChapter = await db.chapter.update({
             where: {
-                id: params.chapterId,
-                courseId: params.courseId
+                id: chapterId,
+                courseId: courseId
             },
             data: {
                 isPublished: true,

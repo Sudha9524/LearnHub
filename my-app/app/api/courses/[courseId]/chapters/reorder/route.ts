@@ -4,9 +4,10 @@ import { db } from "@/lib/db"
 
 export async function PUT(
  req: Request,
- { params }: { params: { courseId: string; } }
+ context: { params: { courseId: string; } }
 ) {
     try {
+        const {courseId} = context.params;
         const { userId } = await auth();
 
         if (!userId) {
@@ -17,7 +18,7 @@ export async function PUT(
 
         const ownCourse = await db.course.findUnique({
             where: {
-                id: params.courseId,
+                id: courseId,
                 userId: userId
             }
         });

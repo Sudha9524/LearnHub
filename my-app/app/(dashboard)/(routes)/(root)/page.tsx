@@ -24,8 +24,9 @@ const {
         <InfoCard
           icon={Clock}
           label="In Progress"
-          numberOfItems={coursesInProgress.length}       
-          />
+          numberOfItems={coursesInProgress.length} 
+          variant="default"        
+           />
          <InfoCard
           icon={CheckCircle}
           label="Completed"

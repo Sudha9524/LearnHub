@@ -1,13 +1,13 @@
 import Mux from "@mux/mux-node";
-import { auth } from "@clerk/nextjs/server"
-import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-import { db } from "@/lib/db"
+import { db } from "@/lib/db";
 
 const { video } = new Mux({
   tokenId: process.env.MUX_TOKEN_ID!,
   tokenSecret: process.env.MUX_TOKEN_SECRET!,
-})
+});
 
 export async function DELETE(
 req: Request,
@@ -17,9 +17,9 @@ context: { params: { courseId: string; chapterId: string } }
         const {courseId, chapterId} = context.params;
 const { userId } = await auth();
 
-if (!userId) {
-    return new NextResponse("Unauthorized", { status: 401 });
-}
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
 const ownCourse = await db.course.findUnique({
     where: {
@@ -28,9 +28,9 @@ const ownCourse = await db.course.findUnique({
     }
 });
 
-if (!ownCourse) {
-    return new NextResponse("Unauthorized", { status: 401 });
-}
+    if (!ownCourse) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
 const chapter = await db.chapter.findUnique({
     where: {
@@ -39,25 +39,25 @@ const chapter = await db.chapter.findUnique({
     }
 });
 
-if (!chapter) {
-    return new NextResponse("Not Found", { status: 404 });
-}
-   if (chapter.videoUrl) {
-    const existingMuxData = await db.muxData.findFirst({
+    if (!chapter) {
+      return new NextResponse("Not Found", { status: 404 });
+    }
+    if (chapter.videoUrl) {
+      const existingMuxData = await db.muxData.findFirst({
         where: {
             chapterId: chapterId,
         }
     });
 
-    if (existingMuxData) {
+      if (existingMuxData) {
         await video.assets.delete(existingMuxData.assetId);
         await db.muxData.delete({
-            where: {
-                id: existingMuxData.id,
-            }
+          where: {
+            id: existingMuxData.id,
+          },
         });
+      }
     }
-   } 
 
    const deletedChapter = await db.chapter.delete({
     where: {
@@ -69,28 +69,26 @@ if (!chapter) {
     where: {
         courseId: courseId,
         isPublished: true,
-    }
-   });
+      },
+    });
 
-   if (!publishedChaptersInCourse.length) {
-    await db.course.update({
+    if (!publishedChaptersInCourse.length) {
+      await db.course.update({
         where: {
             id: courseId,
         },
         data: {
-            isPublished: false,
-        }
-    });
-   }
+          isPublished: false,
+        },
+      });
+    }
 
-   return NextResponse.json(deletedChapter);
-} catch(error) {
+    return NextResponse.json(deletedChapter);
+  } catch (error) {
     console.log("[CHAPTER_ID_DELETE]", error);
     return new NextResponse("Internal Error", { status: 500 });
+  }
 }
-}
-
-
 
 export async function PATCH(
    req: Request,
@@ -101,9 +99,9 @@ export async function PATCH(
         const { userId } = await auth();
         const {isPublished, ...values } = await req.json();
 
-        if (!userId) {
-            return new NextResponse("Unauthorized", { status: 401 });
-        }
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
         const ownCourse = await db.course.findUnique({
             where: {
@@ -112,9 +110,9 @@ export async function PATCH(
             }
         });
 
-        if (!ownCourse) {
-            return new NextResponse("Unauthorized", { status: 401 });
-        }
+    if (!ownCourse) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
 
         const chapter = await db.chapter.update({
             where: {
@@ -157,11 +155,9 @@ export async function PATCH(
             });
         }
 
-        return NextResponse.json(chapter);
-    } catch (error) {
-        console.log("[COURSES_CHAPTER_ID]", Error);
-        return new NextResponse("Internal Error", { status: 500 });
-    }
+    return NextResponse.json(updatedChapter);
+  } catch (error) {
+    console.log("[COURSES_CHAPTER_ID]", Error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
 }
-    
-

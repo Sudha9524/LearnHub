@@ -5,7 +5,7 @@ export const getProgress = async (
     courseId: string,
 ): Promise<number> => {
     try {
-        const publishedChapters = await db.chapter.deleteMany({
+        const publishedChapters = await db.chapter.findMany({
             where: {
                 courseId: courseId,
                 isPublished: true,

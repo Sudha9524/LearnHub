@@ -14,11 +14,7 @@ const handleAuth = async () => {
 
 export const ourFileRouter = {
   courseImage: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
-    .middleware(async () => {
-      const { userId } = await auth();
-      if (!userId) throw new UploadThingError("Unauthorized");
-      return { userId };
-    })
+    .middleware(()=>handleAuth())
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("Upload complete for userId:", metadata.userId);
       console.log("File url:", file.url);

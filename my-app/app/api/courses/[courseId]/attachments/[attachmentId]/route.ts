@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
-import { isTeacher } from "@/lib/teacher";
 
 export async function DELETE (
     req: Request,
@@ -12,7 +11,7 @@ export async function DELETE (
         const {courseId,attachmentId} = context.params;
         const { userId } = await auth();
 
-        if (!userId || !isTeacher(userId)) {
+        if (!userId) {
             return new NextResponse("Unauthorised", { status: 401 });
         } 
 

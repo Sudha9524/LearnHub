@@ -3,7 +3,6 @@ import { Banner } from "@/components/banner";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { VideoPlayer } from "./_components/video-player";
-import { CourseEnrollButton } from "./_components/course-enroll-button";
 import { Separator } from "@/components/ui/separator";
 import { Preview } from "@/components/preview";
 import { File } from "lucide-react";
@@ -42,7 +41,9 @@ const ChapterIdPage = async ({
   return (
     <div>
       {userProgress?.isCompleted && (
-        <Banner variant="success" label="you already completed this chapter." />
+        <Banner
+         variant="success" 
+        label="you already completed this chapter." />
       )}
       {isLocked && (
         <Banner
@@ -57,27 +58,24 @@ const ChapterIdPage = async ({
             title={chapter.title}
             courseId={courseId}
             nextChapterId={nextChapter?.id}
-            playbackId={muxData?.playbackId!}
+            playbackId={muxData?.playbackId as string}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
           />
         </div>
         <div>
           <div className="p-4 flex flex-col md: items-center justify-between">
-            <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
-            {purchase ? (
+            <h2 className="text-2xl font-semibold mb-2">
+              {chapter.title}
+                </h2>
+             (
               <CourseProgressButton
               chapterId={chapterId}
               courseId={courseId}
               nextChapterId={nextChapter?.id}
               isCompleted={!!userProgress?.isCompleted}
               />
-            ) : (
-              <CourseEnrollButton
-                courseId={courseId}
-                price={course.price!}
-              />
-            )}
+            )
           </div>
           <Separator />
           <div>

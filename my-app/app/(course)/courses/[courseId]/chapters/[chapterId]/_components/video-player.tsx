@@ -53,7 +53,7 @@ export const VideoPlayer = ({
             }
           
         }catch {
-            toast.error("Sometyhing went wrong");
+            toast.error("Something went wrong");
         }
     }
     return (

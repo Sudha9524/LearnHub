@@ -30,10 +30,10 @@ export const ChapterActions = ({
 
             if (isPublished) {
                 await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/unpublish`);
-                toast.success("Chapter Unpublished");
+                toast.success("Chapter UnSaved");
             } else {
                 await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}/publish`);
-                toast.success("chapter published");
+                toast.success("Chapter Saved");
             }
             router.refresh();
         }catch {

@@ -38,9 +38,6 @@ export default function RootLayout({
           </header>
 
           {children}
-          <footer className="flex justify-between items-center px-4 py-1 bg-blue-300">
-            footer
-          </footer>
         </body>
       </html>
     </ClerkProvider>
